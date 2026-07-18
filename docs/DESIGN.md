@@ -251,7 +251,7 @@ GET    /api/v1/release/manifest                      #Alignment §16.4 Read-only
   "code": "TENANT_QUOTA_GPU_DISABLED",
   "message": "GPU quota only takes effect when self-hosted inference (full file modelServing) is enabled",
   "traceId": "b3b1...",
-  "doc": "https://docs.openstrata.io/errors/TENANT_QUOTA_GPU_DISABLED"
+  "doc": "https://docs.openstrata.cc/errors/TENANT_QUOTA_GPU_DISABLED"
 }
 ```
 

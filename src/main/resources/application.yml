@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  # Offline harness has no database; exclude JPA/DataSource auto-config so the
+  # service boots without Postgres. Production enables these (see Dockerfile).
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  application:
+    name: ai-platform-api
+
+openstrata:
+  service:
+    port: 8081
+  features:
+    multitenancy:
+      enabled: false
+    billing:
+      enabled: false
+    security:
+      enabled: false
+    riskControl:
+      enabled: true
+  spi:
+    auth:
+      provider: keycloak
+    multitenancy:
+      provider: capsule
+    cache:
+      provider: redis
