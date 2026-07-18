@@ -1,6 +1,6 @@
 # ADR-0003: Schema-per-tenant vs RLS
 
-- **Status**: Pending (Open)
+- **Status**: Accepted — see R-002 in `openstrata-meta/contracts/adr-resolutions.md`
 - **Date**: 2026-07-17
 - **Suggested by**: OpenStrata Architecture Group
 - **Repository**: ai-platform-api
@@ -27,7 +27,7 @@ This ADR solidifies "Schema-per-tenant vs RLS" into an architectural decision re
 
 ## To be aligned / Follow-ups (Follow-ups)
 
-- Solidify the decision before the review at the corresponding stage, and write the final conclusion back into this ADR (the status is changed from "Pending" to "Adopted").
+- **Resolution (R-002)**: Accepted — RLS-primary isolation; schema-per-tenant is opt-in Enterprise only. The starter (single-tenant) deployment uses RLS on the shared schema and does NOT build an independent schema. See `openstrata-meta/contracts/adr-resolutions.md`.
 
 ## Traceback
 
