@@ -1,6 +1,6 @@
 # ai-platform-api · AI Coding Rules & Skills (SKILLS)
 
-> **Source**: Extracted from `design/DESIGN.md` §5 (Domain Rules), §11 (Integration Points), §12 (Security & Multi-tenancy). These rules guide AI-assisted development within this repo.
+> **Source**: Extracted from `docs/DESIGN.md` §5 (Domain Rules), §11 (Integration Points), §12 (Security & Multi-tenancy). These rules guide AI-assisted development within this repo.
 
 ---
 
@@ -215,4 +215,4 @@ public Tenant createTenant(CreateTenantCommand cmd) { ... }
 
 ---
 
-> **References**: Full domain rules in `design/DESIGN.md` §5, §11, §12. Also cross-reference `skills/SKILLS.md` across other repos for cross-service rules (e.g., `bump-spi-version` is shared).
+> **References**: Full domain rules in `docs/DESIGN.md` §5, §11, §12. Also cross-reference `docs/SKILLS.md` across other repos for cross-service rules (e.g., `bump-spi-version` is shared).

@@ -1,6 +1,6 @@
 # ai-platform-api · Architecture Decision Document (ARCH)
 
-> **Source**: Extracted from `design/DESIGN.md` §1, §2, §3, §6. Full design doc is the authority; this distillate captures architectural decisions, constraints, and SPI boundaries for implementers.
+> **Source**: Extracted from `docs/DESIGN.md` §1, §2, §3, §6. Full design doc is the authority; this distillate captures architectural decisions, constraints, and SPI boundaries for implementers.
 
 ---
 
@@ -8,11 +8,11 @@
 
 | Attribute | Value |
 | --- | --- |
-| Domain | control-plane (平台控制面核心) |
+| Domain | control-plane (Platform control plane core) |
 | Language / Framework | Java · Spring Boot 3.x (Jakarta Persistence / MyBatis-Flex) |
 | Optional | No — core, enabled in all profiles (starter~full) |
 | Default Port | 8081 |
-| Platform Version | v1.4.0 |
+| Platform Version | v1.0.0 |
 | Deployment | 2-3 replicas, `ai-system` namespace, 500m CPU / 1Gi request |
 | Database | PostgreSQL@16.0 (core base), schema `platform_cp` |
 
@@ -120,7 +120,7 @@ Each use case maps to a single Application Service with `@Transactional` boundar
 
 ### 4.1 Architecture Style
 
-Follows **DDD four-layer architecture** (§15.6.2):
+Follows **DDD four-layer architecture** (§15.5.2):
 - **Interface Layer (①)**: REST controllers, DTO mapping, `@PreAuthorize` annotations.
 - **Application Layer (②)**: Application Services with `@Transactional`, DTO↔Domain conversion, `@Audit` aspect.
 - **Domain Layer (③)**: Aggregates, Entities, Value Objects, Domain Services, Domain Events, **Port interfaces only** (zero external dependencies).
@@ -204,7 +204,7 @@ These services are defined in the domain layer, operate only on domain objects, 
 
 Domain layer (③) defines **Port interfaces ONLY** — pure Java interfaces, no implementation, no external dependencies. Infrastructure layer (④) implements **Adapter + Anti-Corruption Layer (ACL)**.
 
-The ACL's job is to translate between external system DTOs/APIs and internal domain objects. This keeps the domain layer pure and allows switching implementations with zero domain code changes (§10.4, §15.6.4).
+The ACL's job is to translate between external system DTOs/APIs and internal domain objects. This keeps the domain layer pure and allows switching implementations with zero domain code changes (§10.4, §15.5.4).
 
 ```
 ┌──────────────┐     ┌─────────────────────┐     ┌─────────────────┐
@@ -287,12 +287,12 @@ If Capsule is unavailable when `multitenancy.enabled=true`, readiness fails. If 
 | Redis | External OSS | 7.4.0 | BSD-3 | core | CachePort |
 | Valkey | External OSS | 7.2.0 | BSD-3 | optional (OSI alternative) | CachePort |
 | PostgreSQL | External OSS | 16.0 | PostgreSQL | core base | — (direct JPA) |
-| ai-dependency-resolver | Internal (Go) | v1.4.0 | internal | core | ManifestPort |
-| ai-admin-service | Internal (Java) | v1.4.0 | internal | core | ControlPlaneClient |
-| ai-gateway-core | Internal (Go) | v1.4.0 | internal | core | AppRegistryPort |
-| ai-billing-service | Internal (Java) | v1.4.0 | internal | multi-tenant only | BillingEventPort |
-| ai-srs-service | Internal (Java) | v1.4.0 | internal | optional (full) | PolicyRulePort |
-| ai-tool-registry | Internal (Go) | v1.4.0 | internal | core | AppRegistryPort |
+| ai-dependency-resolver | Internal (Go) | v1.0.0 | internal | core | ManifestPort |
+| ai-admin-service | Internal (Java) | v1.0.0 | internal | core | ControlPlaneClient |
+| ai-gateway-core | Internal (Go) | v1.0.0 | internal | core | AppRegistryPort |
+| ai-billing-service | Internal (Java) | v1.0.0 | internal | multi-tenant only | BillingEventPort |
+| ai-srs-service | Internal (Java) | v1.0.0 | internal | optional (full) | PolicyRulePort |
+| ai-tool-registry | Internal (Go) | v1.0.0 | internal | core | AppRegistryPort |
 
 ---
 
@@ -369,7 +369,7 @@ If Capsule is unavailable when `multitenancy.enabled=true`, readiness fails. If 
 ---
 
 > **References**:
-> - Full design: `design/DESIGN.md` (16 sections, all architectural decisions)
-> - Architecture framework: `../../OpenStrata架构设计文档 v2.8.md` §4.1, §8, §12, §14, §15.6, §16
-> - SPI contract tests: `skills/SKILLS.md` — `bump-spi-version` rule
-> - OpenAPI spec: `specs/SPECS.md` — endpoint table and data model DDL
+> - Full design: `docs/DESIGN.md` (16 sections, all architectural decisions)
+> - Architecture framework: `../../OpenStrata architecture design document v2.8.md` §4.1, §8, §12, §14, §15.5, §16
+> - SPI contract tests: `docs/SKILLS.md` — `bump-spi-version` rule
+> - OpenAPI spec: `docs/SPECS.md` — endpoint table and data model DDL
