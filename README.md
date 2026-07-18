@@ -21,13 +21,21 @@ ai-platform-api/
 └── specs/                  #★ Specifications and contracts (API/AgentSpec/SPI Schema)
 ```
 
-## Responsibilities of this repository (TODO: completion)
+## Responsibilities of this repository
 
-Describe in 1-3 sentences: the role of this repository in the layered architecture, the **SPI ports** exposed/dependent, and the external open source components it relies on (default ✅/optional).
+`ai-platform-api` is the **platform control-plane core API** (Java / Spring Boot 3.3.2, port 8081). It is the authoritative domain model and write-path for tenant / user / application / plan / quota / entitlement / model-grant data. `ai-admin-service` consumes it via the `ControlPlaneClient` SPI and never writes directly (see `docs/ARCH.md` §2.5).
 
-## Local development (TODO: completion)
+- **SPI ports exposed/consumed (8):** `AuthPort`, `MultiTenancyPort`, `CachePort`, `ManifestPort`, `AppRegistryPort`, `PolicyRulePort`, `BillingEventPort`, `ControlPlaneClient` — each with an in-memory adapter for offline runs.
+- **External OSS:** Keycloak ✅ (auth), Redis/Valkey ✅ (cache), PostgreSQL 16 ✅ (base), Capsule (optional, multitenancy).
+- **Internal peers:** `ai-gateway-core` (quota/app push), `ai-billing-service` (multi-tenant only), `ai-srs-service` (approval policies, optional), `ai-dependency-resolver` (manifest delivery).
 
-- Build/Test/Run commands
-- How to access meta repository `dependencies/` dependency graph and `profiles/` presets
+## Local development
+
+- **Build:** `mvn -q -B package -DskipTests`
+- **Test (verify gate, fully offline):** `mvn -q -B test` — 25 JUnit 5 cases covering the pure-logic domain rules, application services (in-memory adapters) and one controller (standalone MockMvc).
+- **Run:** `mvn -q -B spring-boot:run` — boots offline; JPA/DataSource auto-config is excluded in `application.yml`, so no database is required.
+- **Code generation:** generated 2026-07-18 from `openstrata-meta/codegen/manifests/ai-platform-api.json` + `prompts/ai-platform-api.md`. Bounded modules: tenant-lifecycle, user-identity, application-registry, plan-quota, entitlement-model-grant, multitenancy, approval, audit, release-manifest. R-002 (RLS-primary) and R-005 (server-side RBAC) are honored.
+
+> **Open gaps (intentional for this offline deliverable):** persistence uses in-memory repositories; production should add JPA entities + Spring Data repositories and re-enable `DataSourceAutoConfiguration`. Domain events are dispatched synchronously via SPI ports; a production async event bus can replace the direct calls. The Flyway migrations `src/main/resources/db/migration/V1__init.sql` + `V2__rls.sql` ship but the Flyway dependency is omitted in this sandbox.
 
 > Evolutionary AI coding: The `docs/ (ARCH.md, DESIGN.md, SKILLS.md, SPECS.md, adr/)` of this repository is the source of truth shared by AI assistants and contributors; new decisions are recorded as ADRs in `docs/adr/`.
