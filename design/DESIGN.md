@@ -7,7 +7,7 @@
 > | Language · Framework | Java · Spring Boot 3.x (Jakarta Persistence/MyBatis-Flex, §15.5.1) |
 > | Domain | control-plane (core of platform control plane) |
 > | optional | No (core, starter~full enabled, see `repos.yaml` / `profiles/*.yaml`) |
-> | Platform version | v1.4.0 |
+> | Platform version | v1.0.0 |
 > | Document Status | Draft |
 > | Responsible person | OpenStrata Architecture Group |
 > | Related links | [arch](./arch/ARCH.md) · [skills](./skills/SKILLS.md) · [specs](./specs/SPECS.md) · Architecture document [§4.1](../../OpenStrata Architecture Design Document v2.8.md) [§8](../../OpenStrata Architecture Design Document v2.8.md) [§12](../../OpenStrata Architecture Design Document v2.8.md) [§14](../../OpenStrata Architecture Design Document v2.8.md) [§15.5](../../OpenStrata Architecture Design Document v2.8.md) [§16](../../OpenStrata Architecture Design Document v2.8.md) |
@@ -434,12 +434,12 @@ openstrata:
 | Capsule | External OSS (MultiTenancy SPI) | capsule@1.9.0 optional | Multi-tenancy only (§8.2) |
 | Redis / Valkey | External OSS (Cache SPI) | redis@7.4.0 ✅ core / valkey@7.2.0 optional | Cache/session (§16.3) |
 | PostgreSQL | base base | postgresql@16.0 ✅ core | persistence (§16 base) |
-| ai-dependency-resolver | Internal services | Go, tag v1.4.0 | Manifest dependency resolution and delivery (§13.3) |
-| ai-admin-service | Internal service | Java, tag v1.4.0 | Management, orchestration and consumption of this service (§14) |
-| ai-gateway-core | Internal Services | Go, tag v1.4.0 | Quota/App Registration Push (§15.2) |
-| ai-billing-service | Internal service | Java, tag v1.4.0 | Billing linkage (§8.3, multi-tenant only) |
-| ai-srs-service | Internal Service | Java, tag v1.4.0 | Rules/Policy Package (§7.3, optional) |
-| ai-tool-registry | Internal Services | Go, tag v1.4.0 | Application ↔ Tool Schema (§4.3.2) |
+| ai-dependency-resolver | Internal services | Go, tag v1.0.0 | Manifest dependency resolution and delivery (§13.3) |
+| ai-admin-service | Internal service | Java, tag v1.0.0 | Management, orchestration and consumption of this service (§14) |
+| ai-gateway-core | Internal Services | Go, tag v1.0.0 | Quota/App Registration Push (§15.2) |
+| ai-billing-service | Internal service | Java, tag v1.0.0 | Billing linkage (§8.3, multi-tenant only) |
+| ai-srs-service | Internal Service | Java, tag v1.0.0 | Rules/Policy Package (§7.3, optional) |
+| ai-tool-registry | Internal Services | Go, tag v1.0.0 | Application ↔ Tool Schema (§4.3.2) |
 
 ---
 
@@ -465,7 +465,7 @@ openstrata:
 
 ## 14. Deployment and elasticity (K8s resources/HPA/probes)
 
-- **Deployment**: `ai-platform-api`, stateless, 2~3 copies; image `openstrata/ai-platform-api:v1.4.0`.
+- **Deployment**: `ai-platform-api`, stateless, 2~3 copies; image `openstrata/ai-platform-api:v1.0.0`.
 - **namespace**: shared `ai-system` (§9.2); multi-tenant data is isolated in `ai-tenant-{x}`.
 - **Probe**:
   - liveness：`GET /actuator/health/liveness`

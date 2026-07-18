@@ -12,7 +12,7 @@
 | Language / Framework | Java · Spring Boot 3.x (Jakarta Persistence / MyBatis-Flex) |
 | Optional | No — core, enabled in all profiles (starter~full) |
 | Default Port | 8081 |
-| Platform Version | v1.4.0 |
+| Platform Version | v1.0.0 |
 | Deployment | 2-3 replicas, `ai-system` namespace, 500m CPU / 1Gi request |
 | Database | PostgreSQL@16.0 (core base), schema `platform_cp` |
 
@@ -287,12 +287,12 @@ If Capsule is unavailable when `multitenancy.enabled=true`, readiness fails. If 
 | Redis | External OSS | 7.4.0 | BSD-3 | core | CachePort |
 | Valkey | External OSS | 7.2.0 | BSD-3 | optional (OSI alternative) | CachePort |
 | PostgreSQL | External OSS | 16.0 | PostgreSQL | core base | — (direct JPA) |
-| ai-dependency-resolver | Internal (Go) | v1.4.0 | internal | core | ManifestPort |
-| ai-admin-service | Internal (Java) | v1.4.0 | internal | core | ControlPlaneClient |
-| ai-gateway-core | Internal (Go) | v1.4.0 | internal | core | AppRegistryPort |
-| ai-billing-service | Internal (Java) | v1.4.0 | internal | multi-tenant only | BillingEventPort |
-| ai-srs-service | Internal (Java) | v1.4.0 | internal | optional (full) | PolicyRulePort |
-| ai-tool-registry | Internal (Go) | v1.4.0 | internal | core | AppRegistryPort |
+| ai-dependency-resolver | Internal (Go) | v1.0.0 | internal | core | ManifestPort |
+| ai-admin-service | Internal (Java) | v1.0.0 | internal | core | ControlPlaneClient |
+| ai-gateway-core | Internal (Go) | v1.0.0 | internal | core | AppRegistryPort |
+| ai-billing-service | Internal (Java) | v1.0.0 | internal | multi-tenant only | BillingEventPort |
+| ai-srs-service | Internal (Java) | v1.0.0 | internal | optional (full) | PolicyRulePort |
+| ai-tool-registry | Internal (Go) | v1.0.0 | internal | core | AppRegistryPort |
 
 ---
 
