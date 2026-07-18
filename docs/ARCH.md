@@ -1,6 +1,6 @@
 # ai-platform-api · Architecture Decision Document (ARCH)
 
-> **Source**: Extracted from `design/DESIGN.md` §1, §2, §3, §6. Full design doc is the authority; this distillate captures architectural decisions, constraints, and SPI boundaries for implementers.
+> **Source**: Extracted from `docs/DESIGN.md` §1, §2, §3, §6. Full design doc is the authority; this distillate captures architectural decisions, constraints, and SPI boundaries for implementers.
 
 ---
 
@@ -369,7 +369,7 @@ If Capsule is unavailable when `multitenancy.enabled=true`, readiness fails. If 
 ---
 
 > **References**:
-> - Full design: `design/DESIGN.md` (16 sections, all architectural decisions)
+> - Full design: `docs/DESIGN.md` (16 sections, all architectural decisions)
 > - Architecture framework: `../../OpenStrata architecture design document v2.8.md` §4.1, §8, §12, §14, §15.5, §16
-> - SPI contract tests: `skills/SKILLS.md` — `bump-spi-version` rule
-> - OpenAPI spec: `specs/SPECS.md` — endpoint table and data model DDL
+> - SPI contract tests: `docs/SKILLS.md` — `bump-spi-version` rule
+> - OpenAPI spec: `docs/SPECS.md` — endpoint table and data model DDL

@@ -10,9 +10,9 @@
 > | Platform version | v1.0.0 |
 > | Document Status | Draft |
 > | Responsible person | OpenStrata Architecture Group |
-> | Related links | [arch](./arch/ARCH.md) · [skills](./skills/SKILLS.md) · [specs](./specs/SPECS.md) · Architecture document [§4.1](../../OpenStrata Architecture Design Document v2.8.md) [§8](../../OpenStrata Architecture Design Document v2.8.md) [§12](../../OpenStrata Architecture Design Document v2.8.md) [§14](../../OpenStrata Architecture Design Document v2.8.md) [§15.5](../../OpenStrata Architecture Design Document v2.8.md) [§16](../../OpenStrata Architecture Design Document v2.8.md) |
+> | Related links | [arch](./ARCH.md) · [skills](./SKILLS.md) · [specs](./SPECS.md) · Architecture document [§4.1](../../OpenStrata Architecture Design Document v2.8.md) [§8](../../OpenStrata Architecture Design Document v2.8.md) [§12](../../OpenStrata Architecture Design Document v2.8.md) [§14](../../OpenStrata Architecture Design Document v2.8.md) [§15.5](../../OpenStrata Architecture Design Document v2.8.md) [§16](../../OpenStrata Architecture Design Document v2.8.md) |
 
-> This document covers the existing placeholder skeleton (`design/DESIGN.md` top template) without changing `arch/`, `skills/`, `specs/`, `README.md`. Chapters are strictly organized into 16 sections, and live ```mermaid``` is used throughout the figures.
+> This document covers the existing placeholder skeleton (`docs/DESIGN.md` top template) without changing `arch/`, `skills/`, `specs/`, `README.md`. Chapters are strictly organized into 16 sections, and live ```mermaid``` is used throughout the figures.
 
 ---
 
@@ -480,7 +480,7 @@ openstrata:
 
 - **Single test (domain layer, fastest, zero framework)**: `QuotaPolicyService` / `MultitenancyProvisioningRule` / `EntitlementConsistencyRule` Pure logic single test (JUnit 5 + AssertJ), coverage target ≥ 85%.
 - **Integration (Spring Boot Test + Testcontainers)**: PostgreSQL + Redis container, verify JPA mapping, Flyway migration, transaction boundaries.
-- **SPI contract test**: `AuthPort`/`MultiTenancyPort`/`CachePort` is compared with Adapter implementation `bom.yaml` `interface_versions` for contract verification (align `bump-spi-version` of `skills/SKILLS.md`).
+- **SPI contract test**: `AuthPort`/`MultiTenancyPort`/`CachePort` is compared with Adapter implementation `bom.yaml` `interface_versions` for contract verification (align `bump-spi-version` of `docs/SKILLS.md`).
 - **Cross-service contract**: `ControlPlaneClient` proto/REST contract testing with `ai-admin-service`; quota push contract with `ai-gateway-core`.
 - **E2E**: In `demo/<profile>` (§15.4), press starter→advanced to run to create a tenant→turn on multi-tenant→set up a full package link.
 
