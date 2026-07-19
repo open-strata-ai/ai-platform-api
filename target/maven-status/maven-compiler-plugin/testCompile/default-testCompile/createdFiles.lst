@@ -1,0 +1,11 @@
+cc/openstrata/platform/application/QuotaAppServiceTest.class
+cc/openstrata/platform/application/EntitlementAppServiceTest.class
+cc/openstrata/platform/domain/rule/EntitlementConsistencyRuleTest.class
+cc/openstrata/platform/domain/rule/MultitenancyProvisioningRuleTest.class
+cc/openstrata/platform/application/TenantAppServiceTest.class
+cc/openstrata/platform/domain/rule/ApprovalRuleTest.class
+cc/openstrata/platform/infrastructure/persistence/JpaPlanRepositoryTest.class
+cc/openstrata/platform/web/TenantControllerTest.class
+cc/openstrata/platform/domain/rule/TenantIdUniquenessRuleTest.class
+cc/openstrata/platform/domain/rule/ModelGrantRuleTest.class
+cc/openstrata/platform/domain/rule/QuotaPolicyServiceTest.class

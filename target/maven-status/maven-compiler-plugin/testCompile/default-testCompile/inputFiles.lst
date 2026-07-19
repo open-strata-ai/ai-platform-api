@@ -1,0 +1,12 @@
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/application/EntitlementAppServiceTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/application/QuotaAppServiceTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/application/TenantAppServiceTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/ApprovalRuleTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/EntitlementConsistencyRuleTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/ModelGrantRuleTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/MultitenancyProvisioningRuleTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/QuotaPolicyServiceTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/domain/rule/TenantIdUniquenessRuleTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/infrastructure/persistence/JpaPlanRepositoryTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/infrastructure/persistence/JpaTenantRepositoryTest.java
+/Users/weiping/Code/openstrata/ai-platform-api/src/test/java/cc/openstrata/platform/web/TenantControllerTest.java
