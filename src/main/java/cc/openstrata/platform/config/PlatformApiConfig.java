@@ -9,6 +9,11 @@ import cc.openstrata.platform.application.QuotaAppService;
 import cc.openstrata.platform.application.TenantAppService;
 import cc.openstrata.platform.application.TenantQueryService;
 import cc.openstrata.platform.application.UserAppService;
+import cc.openstrata.platform.application.UserManagementAppService;
+import cc.openstrata.platform.application.AgentBuildAppService;
+import cc.openstrata.platform.application.AgentPublishingAppService;
+import cc.openstrata.platform.domain.AgentSpecBuilderService;
+import cc.openstrata.platform.domain.AgentVersionService;
 import cc.openstrata.platform.domain.rule.ApprovalRule;
 import cc.openstrata.platform.domain.rule.EntitlementConsistencyRule;
 import cc.openstrata.platform.domain.rule.ModelGrantRule;
@@ -25,7 +30,15 @@ import cc.openstrata.platform.domain.port.MultiTenancyPort;
 import cc.openstrata.platform.domain.port.PlanRepository;
 import cc.openstrata.platform.domain.port.PolicyRulePort;
 import cc.openstrata.platform.domain.port.TenantRepository;
+import cc.openstrata.platform.domain.port.AgentRepository;
+import cc.openstrata.platform.domain.port.DeploymentPort;
+import cc.openstrata.platform.domain.port.ToolRegistryPort;
+import cc.openstrata.platform.domain.port.ModelRegistryPort;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryAppRegistryAdapter;
+import cc.openstrata.platform.infrastructure.adapter.InMemoryToolRegistryAdapter;
+import cc.openstrata.platform.infrastructure.adapter.InMemoryModelRegistryAdapter;
+import cc.openstrata.platform.infrastructure.adapter.MockDeploymentAdapter;
+import cc.openstrata.platform.infrastructure.persistence.InMemoryAgentRepository;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryAuditRecorder;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryAuthAdapter;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryBillingEventAdapter;
@@ -141,6 +154,12 @@ public class PlatformApiConfig {
     }
 
     @Bean
+    public UserManagementAppService userManagementAppService(TenantRepository tenantRepository,
+                                                             AuthPort authPort, AuditRecorder auditRecorder) {
+        return new UserManagementAppService(tenantRepository, authPort, auditRecorder);
+    }
+
+    @Bean
     public ApplicationAppService applicationAppService(TenantRepository tenantRepository,
                                                       AppRegistryPort appRegistryPort, AuditRecorder auditRecorder) {
         return new ApplicationAppService(tenantRepository, appRegistryPort, auditRecorder);
@@ -187,5 +206,57 @@ public class PlatformApiConfig {
     @Bean
     public TenantQueryService tenantQueryService(TenantRepository tenantRepository) {
         return new TenantQueryService(tenantRepository);
+    }
+
+    // --- Batch C: Agent control plane (DV-01..05, DV-11, DV-15) ---
+    @Bean
+    @Profile("!prod")
+    public AgentRepository agentRepository() {
+        return new InMemoryAgentRepository();
+    }
+
+    @Bean
+    @Profile("!prod")
+    public DeploymentPort deploymentPort() {
+        // Batch C satisfies DeploymentPort with the mock adapter so publish→deploy
+        // is fully testable without ai-provisioning-engine (Batch J / F5).
+        return new MockDeploymentAdapter();
+    }
+
+    @Bean
+    @Profile("!prod")
+    public ToolRegistryPort toolRegistryPort() {
+        return new InMemoryToolRegistryAdapter();
+    }
+
+    @Bean
+    @Profile("!prod")
+    public ModelRegistryPort modelRegistryPort() {
+        return new InMemoryModelRegistryAdapter();
+    }
+
+    @Bean
+    public AgentSpecBuilderService agentSpecBuilderService() {
+        return new AgentSpecBuilderService();
+    }
+
+    @Bean
+    public AgentVersionService agentVersionService(AgentRepository agentRepository) {
+        return new AgentVersionService(agentRepository);
+    }
+
+    @Bean
+    public AgentBuildAppService agentBuildAppService(AgentRepository agentRepository,
+                                                     AgentSpecBuilderService specBuilder,
+                                                     ToolRegistryPort toolRegistryPort,
+                                                     ModelRegistryPort modelRegistryPort) {
+        return new AgentBuildAppService(agentRepository, specBuilder, toolRegistryPort, modelRegistryPort);
+    }
+
+    @Bean
+    public AgentPublishingAppService agentPublishingAppService(AgentRepository agentRepository,
+                                                               AgentVersionService agentVersionService,
+                                                               DeploymentPort deploymentPort) {
+        return new AgentPublishingAppService(agentRepository, agentVersionService, deploymentPort);
     }
 }
