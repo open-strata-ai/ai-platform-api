@@ -16,6 +16,9 @@ public enum ErrorCode {
     INVALID_AGENT_SPEC(400, "Agent spec is empty; build the Agent before creating a version"),
     VERSION_NOT_FOUND(404, "Agent version not found"),
     AGENT_NOT_FOUND(404, "Agent not found"),
+    MODEL_NOT_AUTHORIZED(403, "Model not in tenant whitelist"),
+    SRS_BINDING_CONFLICT(409, "Skill already bound to agent"),
+    EVAL_DATASET_NOT_FOUND(404, "Eval dataset not found"),
     ILLEGAL_ARGUMENT(400, "Invalid argument");
 
     private final int httpStatus;

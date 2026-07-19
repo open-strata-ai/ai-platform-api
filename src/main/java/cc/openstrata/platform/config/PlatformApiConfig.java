@@ -12,8 +12,12 @@ import cc.openstrata.platform.application.UserAppService;
 import cc.openstrata.platform.application.UserManagementAppService;
 import cc.openstrata.platform.application.AgentBuildAppService;
 import cc.openstrata.platform.application.AgentPublishingAppService;
+import cc.openstrata.platform.application.EvalAppService;
+import cc.openstrata.platform.application.ModelAuthorizationAppService;
+import cc.openstrata.platform.application.SrsAppService;
 import cc.openstrata.platform.domain.AgentSpecBuilderService;
 import cc.openstrata.platform.domain.AgentVersionService;
+import cc.openstrata.platform.domain.ModelWhitelistService;
 import cc.openstrata.platform.domain.rule.ApprovalRule;
 import cc.openstrata.platform.domain.rule.EntitlementConsistencyRule;
 import cc.openstrata.platform.domain.rule.ModelGrantRule;
@@ -34,9 +38,13 @@ import cc.openstrata.platform.domain.port.AgentRepository;
 import cc.openstrata.platform.domain.port.DeploymentPort;
 import cc.openstrata.platform.domain.port.ToolRegistryPort;
 import cc.openstrata.platform.domain.port.ModelRegistryPort;
+import cc.openstrata.platform.domain.port.SrsPort;
+import cc.openstrata.platform.domain.port.EvalPort;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryAppRegistryAdapter;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryToolRegistryAdapter;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryModelRegistryAdapter;
+import cc.openstrata.platform.infrastructure.adapter.InMemorySrsAdapter;
+import cc.openstrata.platform.infrastructure.adapter.InMemoryEvalAdapter;
 import cc.openstrata.platform.infrastructure.adapter.MockDeploymentAdapter;
 import cc.openstrata.platform.infrastructure.persistence.InMemoryAgentRepository;
 import cc.openstrata.platform.infrastructure.adapter.InMemoryAuditRecorder;
@@ -258,5 +266,41 @@ public class PlatformApiConfig {
                                                                AgentVersionService agentVersionService,
                                                                DeploymentPort deploymentPort) {
         return new AgentPublishingAppService(agentRepository, agentVersionService, deploymentPort);
+    }
+
+    // --- Batch E1: Consumer model authorization (PA-06) ---
+    @Bean
+    @Profile("!prod")
+    public SrsPort srsPort() {
+        return new InMemorySrsAdapter();
+    }
+
+    @Bean
+    @Profile("!prod")
+    public EvalPort evalPort() {
+        return new InMemoryEvalAdapter();
+    }
+
+    @Bean
+    public ModelWhitelistService modelWhitelistService(ModelRegistryPort modelRegistryPort) {
+        return new ModelWhitelistService(modelRegistryPort);
+    }
+
+    @Bean
+    public ModelAuthorizationAppService modelAuthorizationAppService(
+            ModelWhitelistService modelWhitelistService, ModelRegistryPort modelRegistryPort) {
+        return new ModelAuthorizationAppService(modelWhitelistService, modelRegistryPort);
+    }
+
+    // --- Batch F2: SRS binding (DV-06, TA-08) ---
+    @Bean
+    public SrsAppService srsAppService(SrsPort srsPort) {
+        return new SrsAppService(srsPort);
+    }
+
+    // --- Batch G2: Eval trigger (DV-09, DV-17) ---
+    @Bean
+    public EvalAppService evalAppService(EvalPort evalPort) {
+        return new EvalAppService(evalPort);
     }
 }
