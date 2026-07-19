@@ -6,6 +6,8 @@ import cc.openstrata.platform.domain.port.CachePort;
 import cc.openstrata.platform.domain.port.PlanRepository;
 import cc.openstrata.platform.domain.port.TenantRepository;
 import cc.openstrata.platform.infrastructure.adapter.RedisCacheAdapter;
+import jakarta.persistence.EntityManagerFactory;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import cc.openstrata.platform.infrastructure.persistence.AgentJpaRepository;
 import cc.openstrata.platform.infrastructure.persistence.AgentVersionJpaRepository;
 import cc.openstrata.platform.infrastructure.persistence.ApplicationJpaRepository;
@@ -64,5 +66,15 @@ public class PlatformApiProductionConfig {
     public AgentRepository jpaAgentRepository(AgentJpaRepository agentRepo,
                                               AgentVersionJpaRepository versionRepo) {
         return new JpaAgentRepository(agentRepo, versionRepo);
+    }
+
+    /**
+     * Replaces the auto-configured JpaTransactionManager so every transaction is
+     * scoped to the caller's tenant via RLS session variables (R-002). See
+     * {@link RlsTransactionManager} and V5__rls_session.sql.
+     */
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new RlsTransactionManager(entityManagerFactory);
     }
 }
