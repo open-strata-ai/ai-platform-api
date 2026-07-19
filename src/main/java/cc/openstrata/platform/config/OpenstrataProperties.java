@@ -13,6 +13,33 @@ public class OpenstrataProperties {
     private Service service = new Service();
     private Features features = new Features();
     private Spi spi = new Spi();
+    private Services services = new Services();
+
+    public static class Services {
+        private ServiceUrl toolRegistry = new ServiceUrl("http://localhost:8093");
+        private ServiceUrl srs = new ServiceUrl("http://localhost:8083");
+        private ServiceUrl eval = new ServiceUrl("http://localhost:8000");
+        private ServiceUrl provisioning = new ServiceUrl("http://localhost:8080");
+
+        public ServiceUrl getToolRegistry() { return toolRegistry; }
+        public void setToolRegistry(ServiceUrl toolRegistry) { this.toolRegistry = toolRegistry; }
+        public ServiceUrl getSrs() { return srs; }
+        public void setSrs(ServiceUrl srs) { this.srs = srs; }
+        public ServiceUrl getEval() { return eval; }
+        public void setEval(ServiceUrl eval) { this.eval = eval; }
+        public ServiceUrl getProvisioning() { return provisioning; }
+        public void setProvisioning(ServiceUrl provisioning) { this.provisioning = provisioning; }
+    }
+
+    public static class ServiceUrl {
+        private String url;
+
+        public ServiceUrl() {}
+        public ServiceUrl(String url) { this.url = url; }
+
+        public String getUrl() { return url; }
+        public void setUrl(String url) { this.url = url; }
+    }
 
     public static class Service {
         private int port = 8081;
@@ -117,5 +144,13 @@ public class OpenstrataProperties {
 
     public void setSpi(Spi spi) {
         this.spi = spi;
+    }
+
+    public Services getServices() {
+        return services;
+    }
+
+    public void setServices(Services services) {
+        this.services = services;
     }
 }

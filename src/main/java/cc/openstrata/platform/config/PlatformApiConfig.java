@@ -225,6 +225,7 @@ public class PlatformApiConfig {
     }
 
     @Bean
+    @Profile("!prod")
     public DeploymentPort deploymentPort() {
         // Batch C satisfies DeploymentPort with the mock adapter so publish→deploy
         // is fully testable without ai-provisioning-engine (Batch J / F5).
@@ -232,11 +233,13 @@ public class PlatformApiConfig {
     }
 
     @Bean
+    @Profile("!prod")
     public ToolRegistryPort toolRegistryPort() {
         return new InMemoryToolRegistryAdapter();
     }
 
     @Bean
+    @Profile("!prod")
     public ModelRegistryPort modelRegistryPort() {
         return new InMemoryModelRegistryAdapter();
     }
@@ -268,11 +271,13 @@ public class PlatformApiConfig {
 
     // --- Batch E1: Consumer model authorization (PA-06) ---
     @Bean
+    @Profile("!prod")
     public SrsPort srsPort() {
         return new InMemorySrsAdapter();
     }
 
     @Bean
+    @Profile("!prod")
     public EvalPort evalPort() {
         return new InMemoryEvalAdapter();
     }

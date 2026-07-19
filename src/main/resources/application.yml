@@ -59,5 +59,16 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
 
+openstrata:
+  services:
+    tool-registry:
+      url: ${TOOL_REGISTRY_URL:http://localhost:8093}
+    srs:
+      url: ${SRS_URL:http://localhost:8083}
+    eval:
+      url: ${EVAL_URL:http://localhost:8000}
+    provisioning:
+      url: ${PROVISIONING_URL:http://localhost:8080}
+
 server:
   port: 8081
