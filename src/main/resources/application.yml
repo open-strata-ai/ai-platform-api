@@ -2,8 +2,6 @@ server:
   port: 8081
 
 spring:
-  # Offline harness has no database; exclude JPA/DataSource auto-config so the
-  # service boots without Postgres. Production enables these (see Dockerfile).
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
@@ -30,3 +28,36 @@ openstrata:
       provider: capsule
     cache:
       provider: redis
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  autoconfigure:
+    exclude:  # Reset exclusions — enable DataSource, JPA, Flyway
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/platform_api}
+    username: ${DATABASE_USER:platform}
+    password: ${DATABASE_PASSWORD:platform}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+server:
+  port: 8081

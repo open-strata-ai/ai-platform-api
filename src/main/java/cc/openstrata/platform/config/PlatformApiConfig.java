@@ -37,16 +37,19 @@ import cc.openstrata.platform.infrastructure.persistence.InMemoryPlanRepository;
 import cc.openstrata.platform.infrastructure.persistence.InMemoryTenantRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class PlatformApiConfig {
 
     @Bean
+    @Profile("!prod")
     public TenantRepository tenantRepository() {
         return new InMemoryTenantRepository();
     }
 
     @Bean
+    @Profile("!prod")
     public PlanRepository planRepository() {
         return new InMemoryPlanRepository();
     }
