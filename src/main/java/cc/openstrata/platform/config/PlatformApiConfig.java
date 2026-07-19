@@ -111,6 +111,7 @@ public class PlatformApiConfig {
     }
 
     @Bean
+    @Profile("!prod")
     public AuditRecorder auditRecorder() {
         return new InMemoryAuditRecorder();
     }
