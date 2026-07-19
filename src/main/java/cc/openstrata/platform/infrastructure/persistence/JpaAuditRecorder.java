@@ -2,11 +2,15 @@ package cc.openstrata.platform.infrastructure.persistence;
 
 import cc.openstrata.platform.domain.port.AuditRecorder;
 import java.time.Instant;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/** JPA-backed AuditRecorder. Activated by @Profile("prod"). */
-@Repository
+/**
+ * JPA-backed AuditRecorder. Must NOT carry a stereotype annotation: it is
+ * instantiated only via the @Bean factory in PlatformApiProductionConfig, which
+ * is gated by @Profile("prod"). A @Repository here would let component scanning
+ * instantiate it in every profile and fail to start (no AuditJpaRepository in
+ * non-prod). Mirrors the existing JpaTenantRepository / JpaPlanRepository pattern.
+ */
 public class JpaAuditRecorder implements AuditRecorder {
 
     private final AuditJpaRepository repo;
