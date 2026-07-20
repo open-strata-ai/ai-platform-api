@@ -4,7 +4,8 @@ public enum Role {
     PLATFORM_ADMIN("platform-admin"),
     TENANT_ADMIN("tenant-admin"),
     DEVELOPER("developer"),
-    VIEWER("viewer");
+    VIEWER("viewer"),
+    CONSUMER("consumer");
 
     private final String code;
 

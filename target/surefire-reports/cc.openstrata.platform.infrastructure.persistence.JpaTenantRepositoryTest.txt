@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: cc.openstrata.platform.infrastructure.persistence.JpaTenantRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.497 s -- in cc.openstrata.platform.infrastructure.persistence.JpaTenantRepositoryTest

@@ -37,6 +37,26 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
     </dependency>
+    <!-- Flyway for schema migration (production profile) -->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+    <!-- Spring Data Redis for production cache adapter -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <!-- H2 for offline/in-memory test profile -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
@@ -59,11 +79,14 @@
       <version>5.23.0</version>
       <scope>test</scope>
     </dependency>
+    <!-- byte-buddy is also required at RUNTIME by Hibernate (prod JPA profile).
+         Scope must not be `test` or the fat jar boots with
+         NoClassDefFoundError: net/bytebuddy/... on JDK 26. Mirrors ai-admin-service. -->
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
       <version>1.18.10</version>
-      <scope>test</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>net.bytebuddy</groupId>
